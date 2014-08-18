@@ -2,3 +2,7 @@ name: HardtimeMC
 version: 0.1
 main: com.ohyea777.hardtime.Hardtime
 authors: [OhYea777]
+
+commands:
+  test:
+    aliases: [t]
