@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,8 +18,6 @@ public class Block {
     private UUID world;
 
     private Integer x, y, z;
-
-    private transient Map<Integer, Cell> cells;
 
     private transient World worldObj;
 
@@ -33,8 +32,6 @@ public class Block {
     }
 
     public void init() {
-        cells = new HashMap<Integer, Cell>();
-
         if (world != null)
             worldObj = Bukkit.getWorld(world);
 

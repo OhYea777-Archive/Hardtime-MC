@@ -3,6 +3,7 @@ package com.ohyea777.hardtime.cell;
 import com.ohyea777.hardtime.block.Block;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -18,18 +19,18 @@ public class Cell {
     private UUID owner;
     private UUID block;
 
-    private int cellNumber;
+    private UUID cell;
 
     private transient World worldObj;
-    private transient Player playerObj;
+    private transient OfflinePlayer playerObj;
     private transient Block blockObj;
 
     private transient boolean modified;
 
     public Cell() { }
 
-    public Cell(int cellNumber) {
-        this.cellNumber = cellNumber;
+    public Cell(UUID cell) {
+        this.cell = cell;
     }
 
     public void init() {
@@ -37,7 +38,7 @@ public class Cell {
             worldObj = Bukkit.getWorld(world);
 
         if (owner != null)
-            playerObj = Bukkit.getPlayer(owner);
+            playerObj = Bukkit.getOfflinePlayer(owner);
 
         // TODO: Set blockObj
 
@@ -175,12 +176,12 @@ public class Cell {
         setModified(true);
     }
 
-    public int getCellNumber() {
-        return cellNumber;
+    public UUID getCellId() {
+        return cell;
     }
 
-    public void setCellNumber(int cellNumber) {
-        this.cellNumber = cellNumber;
+    public void setCellId(UUID cell) {
+        this.cell = cell;
 
         setModified(true);
     }
@@ -199,7 +200,7 @@ public class Cell {
         }
     }
 
-    public Player getPlayer() {
+    public OfflinePlayer getPlayer() {
         return playerObj;
     }
 
@@ -234,4 +235,5 @@ public class Cell {
     public void setModified(boolean modified) {
         this.modified = modified;
     }
+
 }

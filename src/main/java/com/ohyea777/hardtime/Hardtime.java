@@ -2,14 +2,11 @@ package com.ohyea777.hardtime;
 
 import com.ohyea777.hardtime.block.BlockRegistry;
 import com.ohyea777.hardtime.cell.CellRegistry;
-import com.ohyea777.hardtime.utils.SerializationUtils;
 import com.ohyea777.hardtime.utils.VaultUtils;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Hardtime extends JavaPlugin {
+public class Hardtime extends JavaPlugin implements Listener {
 
     public static Hardtime INSTANCE;
 
@@ -26,6 +23,8 @@ public class Hardtime extends JavaPlugin {
 
         blockRegistry = new BlockRegistry();
         cellRegistry = new CellRegistry();
+
+        getServer().getPluginManager().registerEvents(INSTANCE, INSTANCE);
     }
 
     public BlockRegistry getBlockRegistry() {
@@ -36,19 +35,4 @@ public class Hardtime extends JavaPlugin {
         return cellRegistry;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Players Only!");
-
-            return true;
-        }
-
-        Player player = (Player) sender;
-
-        player.sendMessage(SerializationUtils.serializeItem(player.getItemInHand()));
-        player.getInventory().addItem(SerializationUtils.deserializeItem(SerializationUtils.serializeItem(player.getItemInHand())));
-
-        return true;
-    }
 }
