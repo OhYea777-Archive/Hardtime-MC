@@ -4,6 +4,8 @@ import com.ohyea777.hardtime.block.Block;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class CellBuilder {
 
     private final Cell cell;
@@ -13,7 +15,9 @@ public class CellBuilder {
     }
 
     public CellBuilder() {
-        this(new Cell(-1));
+        cell = new Cell();
+
+        cell.setCellId(UUID.randomUUID());
     }
 
     public CellBuilder withMinCorner(Location location) {
@@ -43,12 +47,6 @@ public class CellBuilder {
         return this;
     }
 
-    public CellBuilder withCellNumber(int cellNumber) {
-        cell.setCellNumber(cellNumber);
-
-        return this;
-    }
-
     public CellBuildResult getCellBuildResult() {
         if (cell.getMinCorner() == null) {
             return CellBuildResult.INVALID_MIN_CORNER;
@@ -56,8 +54,6 @@ public class CellBuilder {
             return CellBuildResult.INVALID_MAX_CORNER;
         } else if (cell.getBlock() == null) {
             return CellBuildResult.INVALID_BLOCK;
-        } else if (cell.getCellNumber() == -1) {
-            return CellBuildResult.INVALID_CELL_NUMBER;
         }
 
         return CellBuildResult.SUCCESS;
@@ -73,7 +69,7 @@ public class CellBuilder {
 
     public enum CellBuildResult {
 
-        INVALID_MIN_CORNER, INVALID_MAX_CORNER, INVALID_BLOCK, INVALID_CELL_NUMBER, SUCCESS;
+        INVALID_MIN_CORNER, INVALID_MAX_CORNER, INVALID_BLOCK, SUCCESS;
 
     }
 
