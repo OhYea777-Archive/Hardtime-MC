@@ -44,7 +44,7 @@ public abstract class HItem implements IItem {
 
     @Override
     public boolean hasPermission(Player player) {
-        return !usesPermissions() || getPermission().isEmpty() || player.hasPermission(getPermission());
+        return !usesPermissions() || getPermission().isEmpty() || player.hasPermission(getPermission()) || player.hasPermission("ht.item.*");
     }
 
     private String strip(String str) {

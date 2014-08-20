@@ -9,8 +9,15 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.shininet.bukkit.itemrenamer.api.ItemsListener;
+import org.shininet.bukkit.itemrenamer.api.RenamerAPI;
+import org.shininet.bukkit.itemrenamer.api.RenamerPriority;
+import org.shininet.bukkit.itemrenamer.api.RenamerSnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ItemRegistry implements Listener {
@@ -23,6 +30,7 @@ public class ItemRegistry implements Listener {
         Hardtime.INSTANCE.getServer().getPluginManager().registerEvents(this, Hardtime.INSTANCE);
 
         init();
+        registerPacketListener();
     }
 
     private void init() {
@@ -51,21 +59,29 @@ public class ItemRegistry implements Listener {
     public boolean isIItem(ItemStack itemStack) {
         if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
             for (String str : itemStack.getItemMeta().getLore())
-                if (containsItem(str))
-                    return true;
+                if (containsItem(str)) {
+                    IItem item = getItem(str);
+
+                    if (itemStack.getType() == item.getMaterial() && itemStack.getDurability() == item.getMeta())
+                        return true;
+                }
         }
 
         return false;
     }
 
     public IItem getIItem(ItemStack itemStack) {
-        if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+        if (isIItem(itemStack)) {
             for (String str : itemStack.getItemMeta().getLore())
                 if (containsItem(str))
                     return getItem(str);
         }
 
         return null;
+    }
+
+    public List<IItem> getItems() {
+        return new ArrayList<IItem>(items.values());
     }
 
     private String strip(String str) {
@@ -104,6 +120,32 @@ public class ItemRegistry implements Listener {
                     item.onItemLeftClickEntity(player, event);
             }
         }
+    }
+
+    private void registerPacketListener() {
+        RenamerAPI.getAPI().addListener(Hardtime.INSTANCE, RenamerPriority.POST_NORMAL, new ItemsListener() {
+
+            @Override
+            public void onItemsSending(Player player, RenamerSnapshot itemStacks) {
+                for (ItemStack itemStack : itemStacks) {
+                    if (itemStack == null || !isIItem(itemStack))
+                        continue;
+
+                    if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
+                        ItemMeta meta = itemStack.getItemMeta();
+                        List<String> lore = new ArrayList<String>();
+
+                        for (String str : meta.getLore())
+                            if (!containsItem(strip(str)))
+                                lore.add(str);
+
+                        meta.setLore(lore);
+                        itemStack.setItemMeta(meta);
+                    }
+                }
+            }
+
+        });
     }
 
 }

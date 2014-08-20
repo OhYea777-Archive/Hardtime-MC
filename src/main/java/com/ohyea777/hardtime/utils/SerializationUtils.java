@@ -77,7 +77,7 @@ public class SerializationUtils {
         String fixedString = "";
 
         for (int i = 0; i < tag.length(); i ++) {
-            if (tag.charAt(i) == ',' && i + 1 < tag.length() && tag.charAt(i + 1) == '}')
+            if (tag.charAt(i) == ',' && i + 1 < tag.length() && (tag.charAt(i + 1) == '}' || tag.charAt(i + 1) == ']'))
                 continue;
 
             fixedString += tag.charAt(i);

@@ -2,7 +2,9 @@ package com.ohyea777.hardtime;
 
 import com.ohyea777.hardtime.block.BlockRegistry;
 import com.ohyea777.hardtime.cell.CellRegistry;
+import com.ohyea777.hardtime.commands.CommandRegistry;
 import com.ohyea777.hardtime.items.ItemRegistry;
+import com.ohyea777.hardtime.items.SelectItem;
 import com.ohyea777.hardtime.utils.VaultUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,6 +19,7 @@ public class Hardtime extends JavaPlugin implements Listener {
     private BlockRegistry blockRegistry;
     private CellRegistry cellRegistry;
     private ItemRegistry itemRegistry;
+    private CommandRegistry commandRegistry;
 
     @Override
     public void onEnable() {
@@ -26,11 +29,18 @@ public class Hardtime extends JavaPlugin implements Listener {
             // TODO: Something on failure of initializing @VaultUtils
         }
 
+        saveResource("config.yml", true);
+
         blockRegistry = new BlockRegistry();
         cellRegistry = new CellRegistry();
         itemRegistry = new ItemRegistry();
+        commandRegistry = new CommandRegistry();
 
         getServer().getPluginManager().registerEvents(INSTANCE, INSTANCE);
+    }
+
+    public void reload() {
+        reloadConfig();
     }
 
     public BlockRegistry getBlockRegistry() {
@@ -45,18 +55,12 @@ public class Hardtime extends JavaPlugin implements Listener {
         return itemRegistry;
     }
 
+    public CommandRegistry getCommandRegistry() {
+        return commandRegistry;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Players only!");
-
-            return true;
-        }
-
-        Player player = (Player) sender;
-
-        player.setItemInHand(getItemRegistry().getItem("Selection Item").createItem());
-
-        return true;
+        return getCommandRegistry().onCommand(sender, command, label, args);
     }
 }

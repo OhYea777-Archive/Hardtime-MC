@@ -2,7 +2,8 @@ name: HardtimeMC
 version: 0.1
 main: com.ohyea777.hardtime.Hardtime
 authors: [OhYea777]
+depend: [ProtocolLib,Vault,ItemRenamer]
 
 commands:
-  test:
-    aliases: [t]
+  hardtime:
+    aliases: [ht,hard,htime,hardt]

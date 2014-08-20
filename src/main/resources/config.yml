@@ -1,0 +1,11 @@
+Options:
+  Prefix: '&8[&6Hardtime MC&8]&7'
+  HelpFormat: '&8-&6] &6%name%&8: &e%command%'
+
+Messages:
+  InvalidCommand: '%prefix% &cInvalid Command!'
+  Help: '%prefix% &6%name% &8(&6Page &e%page% &8/ &e%pages%&8):'
+  NoPermission: '%prefix% &cYou Do Not Have Permission for That!'
+  Reloaded: '%prefix% Configurations Reloaded!'
+  SpawnedItem: '%prefix% Spawned Item&8: &e%item%'
+  InvalidItem: '%prefix% &cSpecified Item is Invalid!'
