@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+@CommandHandler(true)
 public class ListItemsCommand extends HCommand {
 
     private static final int ITEMS_PER_PAGE = 5;

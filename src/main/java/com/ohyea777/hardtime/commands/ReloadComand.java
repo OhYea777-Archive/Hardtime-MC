@@ -5,6 +5,7 @@ import com.ohyea777.hardtime.utils.ConfigUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+@CommandHandler(true)
 public class ReloadComand extends HCommand {
 
     @Override

@@ -1,6 +1,7 @@
 package com.ohyea777.hardtime.commands;
 
 import com.ohyea777.hardtime.Hardtime;
+import com.ohyea777.hardtime.libs.reflections.Reflections;
 import com.ohyea777.hardtime.utils.ConfigUtils;
 import net.minecraft.server.v1_7_R3.ChatSerializer;
 import net.minecraft.server.v1_7_R3.IChatBaseComponent;
@@ -33,10 +34,23 @@ public class CommandRegistry implements CommandExecutor {
     }
 
     public void init() {
-        registerCommand(new ReloadComand());
-        registerCommand(new SpawnCommand());
-        registerCommand(new ListItemsCommand());
-        registerCommand(new TestCommand());
+        Reflections reflections = new Reflections(getClass().getPackage().getName());
+
+        for (Class<? extends HCommand> clz : reflections.getSubTypesOf(HCommand.class)) {
+            if (clz.isAnnotationPresent(CommandHandler.class)) {
+                try {
+                    HCommand command = clz.newInstance();
+
+                    if (clz.getAnnotation(CommandHandler.class).value()) {
+                        registerWithoutHelp(command);
+                    } else {
+                        registerCommand(command);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void registerCommand(HCommand command) {
@@ -114,7 +128,20 @@ public class CommandRegistry implements CommandExecutor {
                 }
             }
         } else if (customCommands.containsKey(cmd.getName().toLowerCase())) {
-
+            if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?"))) {
+                if (customCommands.containsKey(cmd.getName().toLowerCase())) {
+                    sender.sendMessage(customCommands.get(cmd.getName().toLowerCase()).getHelp());
+                    return true;
+                } else {
+                    sender.sendMessage(ConfigUtils.INSTANCE.getString("invalid command", true));
+                    return true;
+                }
+            } else if (!customCommands.get(cmd.getName().toLowerCase()).usesPermission() || sender.hasPermission(customCommands.get(cmd.getName().toLowerCase()).getPermission()))
+                return customCommands.get(cmd.getName().toLowerCase()).onCommand(sender, cmd, label, args);
+            else {
+                sender.sendMessage(ConfigUtils.INSTANCE.getString("no permission", true));
+                return true;
+            }
         }
 
         sender.sendMessage(new String[] { ConfigUtils.INSTANCE.getStringReplace("%prefix% &6About&8:", "%prefix%", "prefix", true), ConfigUtils.INSTANCE.getHelpFormat("Lead Programmer", "OhYea777 @BukkitDev")});
