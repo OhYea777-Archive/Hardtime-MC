@@ -29,6 +29,8 @@ public class Hardtime extends JavaPlugin implements Listener {
             // TODO: Something on failure of initializing @VaultUtils
         }
 
+        // test
+
         saveResource("config.yml", true);
 
         blockRegistry = new BlockRegistry();
