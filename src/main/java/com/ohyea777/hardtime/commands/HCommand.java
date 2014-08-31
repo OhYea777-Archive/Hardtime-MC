@@ -13,6 +13,10 @@ public abstract class HCommand {
 
     public abstract String getName();
 
+    public String getCommand() {
+        return "ht";
+    }
+
     public abstract String[] getAliases();
 
     public abstract String[] getHelp();
