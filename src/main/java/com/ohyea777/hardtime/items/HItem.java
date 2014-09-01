@@ -26,8 +26,8 @@ public abstract class HItem implements IItem {
         ItemMeta meta = itemStack.getItemMeta();
 
         meta.setDisplayName(getLocalisedName());
-        meta.setLore(new ArrayList<String>(Arrays.asList(strip(getLocalisedName()))));
         itemStack.setItemMeta(meta);
+        ItemMetadata.set(itemStack, "IItem", strip(getLocalisedName()));
 
         return itemStack;
     }

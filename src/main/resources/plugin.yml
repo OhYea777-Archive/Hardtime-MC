@@ -5,5 +5,5 @@ authors: [OhYea777]
 depend: [ProtocolLib,Vault,ItemRenamer]
 
 commands:
-  hardtime:
-    aliases: [ht,hard,htime,hardt]
+  ht:
+    aliases: [hardtime,hard,htime,hardt]

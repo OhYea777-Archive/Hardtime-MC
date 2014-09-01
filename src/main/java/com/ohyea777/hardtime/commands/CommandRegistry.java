@@ -1,7 +1,6 @@
 package com.ohyea777.hardtime.commands;
 
 import com.ohyea777.hardtime.Hardtime;
-import com.ohyea777.hardtime.libs.reflections.Reflections;
 import com.ohyea777.hardtime.utils.ConfigUtils;
 import net.minecraft.server.v1_7_R3.ChatSerializer;
 import net.minecraft.server.v1_7_R3.IChatBaseComponent;
@@ -34,7 +33,12 @@ public class CommandRegistry implements CommandExecutor {
     }
 
     public void init() {
-        Reflections reflections = new Reflections(getClass().getPackage().getName());
+        registerCommand(new ListItemsCommand());
+        registerCommand(new ReloadComand());
+        registerCommand(new SpawnCommand());
+        registerCommand(new TestCommand());
+
+        /* Reflections reflections = new Reflections(getClass().getPackage().getName());
 
         for (Class<? extends HCommand> clz : reflections.getSubTypesOf(HCommand.class)) {
             if (clz.isAnnotationPresent(CommandHandler.class)) {
@@ -50,7 +54,7 @@ public class CommandRegistry implements CommandExecutor {
                     e.printStackTrace();
                 }
             }
-        }
+        } */
     }
 
     public void registerCommand(HCommand command) {
@@ -165,7 +169,7 @@ public class CommandRegistry implements CommandExecutor {
                 if (command == null)
                     continue;
 
-                sendChatComponent(player, getComponent(ConfigUtils.INSTANCE.getHelpFormat(command.getName(), "/" + command.getCommand() != "ht" ? command.getCommand() : ("ht " + command.getAliases()[0]) + " help"), "/" + command.getCommand() != "ht" ? command.getCommand() : ("ht " + command.getAliases()[0]) + " help"));
+                sendChatComponent(player, getComponent(ConfigUtils.INSTANCE.getHelpFormat(command.getName(), "/" + command.getCommand() + (command.getCommand() == "ht" ? " " + command.getAliases()[0] : "") + " help"), "/" + command.getCommand() + (command.getCommand() == "ht" ? " " + command.getAliases()[0] : "") + " help"));
             }
     }
 

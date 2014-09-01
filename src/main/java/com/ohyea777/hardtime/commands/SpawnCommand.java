@@ -73,9 +73,7 @@ public class SpawnCommand extends HCommand {
     }
 
     private IChatBaseComponent getJson(String text, IItem item) {
-        Bukkit.broadcastMessage(SerializationUtils.serialize(item.createItem()));
-
-        return ChatSerializer.a(String.format("{\"text\":\"%s\",\"hoverEvent\":{\"action\":\"show_item\",\"value\":\"%s\"}}", text, SerializationUtils.serialize(item.createItem())));
+        return ChatSerializer.a(String.format("{\"text\":\"%s\",\"hoverEvent\":{\"action\":\"show_item\",\"value\":\"%s\"}}", text, SerializationUtils.serialize(item.createItem()).replace("\"", "\\\"")));
     }
 
     private String patchArgs(String[] args) {

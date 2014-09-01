@@ -3,7 +3,6 @@ package com.ohyea777.hardtime.commands;
 import com.ohyea777.hardtime.Hardtime;
 import com.ohyea777.hardtime.items.IItem;
 import com.ohyea777.hardtime.utils.ConfigUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

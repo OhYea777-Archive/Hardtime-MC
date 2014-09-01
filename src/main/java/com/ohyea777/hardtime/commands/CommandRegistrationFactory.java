@@ -1,16 +1,13 @@
 package com.ohyea777.hardtime.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.*;
+import org.bukkit.plugin.Plugin;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-import org.bukkit.plugin.Plugin;
 
 public class CommandRegistrationFactory {
 

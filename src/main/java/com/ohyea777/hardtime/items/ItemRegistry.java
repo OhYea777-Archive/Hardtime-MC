@@ -58,13 +58,7 @@ public class ItemRegistry implements Listener {
 
     public boolean isIItem(ItemStack itemStack) {
         if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore()) {
-            for (String str : itemStack.getItemMeta().getLore())
-                if (containsItem(str)) {
-                    IItem item = getItem(str);
-
-                    if (itemStack.getType() == item.getMaterial() && itemStack.getDurability() == item.getMeta())
-                        return true;
-                }
+            return ItemMetadata.hasMetadata(itemStack, "IItem");
         }
 
         return false;
@@ -72,9 +66,9 @@ public class ItemRegistry implements Listener {
 
     public IItem getIItem(ItemStack itemStack) {
         if (isIItem(itemStack)) {
-            for (String str : itemStack.getItemMeta().getLore())
-                if (containsItem(str))
-                    return getItem(str);
+            String item = ItemMetadata.get(itemStack, "IItem");
+
+            return getItem(item);
         }
 
         return null;
@@ -136,7 +130,7 @@ public class ItemRegistry implements Listener {
                         List<String> lore = new ArrayList<String>();
 
                         for (String str : meta.getLore())
-                            if (!containsItem(strip(str)))
+                            if (!str.startsWith(ItemMetadata.PREFIX))
                                 lore.add(str);
 
                         meta.setLore(lore);
