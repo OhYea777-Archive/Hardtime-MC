@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,12 +34,7 @@ public class CommandRegistry implements CommandExecutor {
     }
 
     public void init() {
-        registerCommand(new ListItemsCommand());
-        registerCommand(new ReloadComand());
-        registerCommand(new SpawnCommand());
-        registerCommand(new TestCommand());
-
-        /* Reflections reflections = new Reflections(getClass().getPackage().getName());
+        Reflections reflections = new Reflections(getClass().getPackage().getName());
 
         for (Class<? extends HCommand> clz : reflections.getSubTypesOf(HCommand.class)) {
             if (clz.isAnnotationPresent(CommandHandler.class)) {
@@ -54,7 +50,7 @@ public class CommandRegistry implements CommandExecutor {
                     e.printStackTrace();
                 }
             }
-        } */
+        }
     }
 
     public void registerCommand(HCommand command) {

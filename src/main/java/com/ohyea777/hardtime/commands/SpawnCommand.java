@@ -7,7 +7,6 @@ import com.ohyea777.hardtime.utils.ConfigUtils;
 import com.ohyea777.hardtime.utils.SerializationUtils;
 import net.minecraft.server.v1_7_R3.ChatSerializer;
 import net.minecraft.server.v1_7_R3.IChatBaseComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
