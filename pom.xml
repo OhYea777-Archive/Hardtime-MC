@@ -10,8 +10,8 @@
 
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
+            <id>spigon-repo</id>
+            <url>http://repo.md-5.net/content/groups/public</url>
         </repository>
 
         <repository>
@@ -28,17 +28,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
             <version>1.7.9-R0.3-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
             <version>1.7.9-R0.3-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>

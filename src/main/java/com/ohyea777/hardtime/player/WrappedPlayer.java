@@ -771,6 +771,11 @@ public class WrappedPlayer implements Player {
     }
 
     @Override
+    public Spigot spigot() {
+        return player.spigot();
+    }
+
+    @Override
     public void sendMessage(String s) {
         player.sendMessage(s);
     }
